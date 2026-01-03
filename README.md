@@ -24,3 +24,24 @@ cd recon-tool
 
 # 3. Instale as dependências
 pip install requests
+
+💻 Como Usar
+Basta executar o script e fornecer a URL ou IP do alvo:
+
+Bash
+python recon-tool.py
+
+Exemplo de Saída:
+
+Plaintext
+
+[*] Conectando em: [http://businesscorp.com](http://businesscorp.com)...
+[+] Conexão Estabelecida! (Status: 200)
+----------------------------------------
+    Servidor Web:  Apache/2.4.52 (Ubuntu)
+    Tecnologia:    PHP/8.1.2
+
+⚠️ Disclaimer
+Esta ferramenta foi criada para fins de estudo e uso educacional. O uso para atacar alvos sem consentimento mútuo prévio é ilegal. O desenvolvedor não se responsabiliza pelo mau uso desta ferramenta.
+
+Dev: Bruno Rodrigo 💀
