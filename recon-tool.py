@@ -8,7 +8,7 @@ AMARELO = "\033[93m"
 AZUL = "\033[96m"
 RESET = "\033[0m"
 
-print(f"{AZUL}--- RECON TOOL VERSÃO 2.0 (CORRIGIDA) ---{RESET}\n")
+print(f"{AZUL}--- RECON TOOL V3.0 (MODO DETALHADO) ---{RESET}\n")
 
 def buscar_cve(tecnologia):
     # Se a tecnologia for vazia ou genérica, ignora
@@ -24,9 +24,9 @@ def buscar_cve(tecnologia):
 
     print(f"    {AZUL}[*] Consultando API NIST para: '{limpo}'...{RESET}")
     
-    # URL da API
+    # URL da API (Agora pedindo 5 resultados)
     url_api = "https://services.nvd.nist.gov/rest/json/cves/2.0"
-    parametros = {'keywordSearch': limpo, 'resultsPerPage': 1}
+    parametros = {'keywordSearch': limpo, 'resultsPerPage': 5}
     
     try:
         resposta = requests.get(url_api, params=parametros, timeout=5)
@@ -36,9 +36,15 @@ def buscar_cve(tecnologia):
             total = dados.get('totalResults', 0)
             
             if total > 0:
-                cve = dados['vulnerabilities'][0]['cve']['id']
-                print(f"    {VERMELHO}[$] VULNERÁVEL! Encontradas {total} falhas (CVEs).{RESET}")
-                print(f"    {VERMELHO}[$] Exemplo: {cve}{RESET}")
+                print(f"    {VERMELHO}[$] VULNERÁVEL! Total de falhas: {total}{RESET}")
+                print(f"    {VERMELHO}[$] Listando as principais:{RESET}")
+                
+                # LOOP PARA MOSTRAR TODAS AS ENCONTRADAS
+                for item in dados['vulnerabilities']:
+                    cve_id = item['cve']['id']
+                    print(f"        -> {VERMELHO}{cve_id}{RESET}")
+                    
+                print(f"    {AZUL}[i] Detalhes: https://nvd.nist.gov/vuln/search?results_type=overview&query={limpo}{RESET}")
             else:
                 print(f"    {VERDE}[+] Nenhuma falha registrada para '{limpo}'.{RESET}")
         else:
